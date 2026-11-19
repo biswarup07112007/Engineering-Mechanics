@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Mechanics Practical Prep — 23/11/2026</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .formula-box { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+  <!-- Top Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white border-b-4 border-amber-500 sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+          <span>Practical Exam Prep</span>
+          <span>•</span>
+          <span>23/11/2026 (Monday)</span>
+        </div>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight mt-0.5">Engineering Mechanics Lab</h1>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="bg-white/10 backdrop-blur px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium border border-white/15">
+          Revised: <span id="progress-count" class="font-bold text-amber-300">0 / 6</span>
+        </div>
+        <button id="btn-viva-mode" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-amber-500 hover:bg-amber-400 text-slate-950 transition shadow-sm">
+          All Viva Q&amp;A
+        </button>
+        <button id="btn-calc-mode" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-teal-600 hover:bg-teal-500 text-white transition shadow-sm">
+          Lab Calculators
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Sidebar: Experiment List -->
+    <aside class="lg:col-span-4 xl:col-span-3 space-y-3">
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Lab Experiments (6)</h2>
+          <input id="search-input" type="text" placeholder="Search..." class="w-32 text-xs px-2.5 py-1 rounded-md border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <nav id="exp-nav" class="space-y-1.5" aria-label="Experiments"></nav>
+      </div>
+
+      <div class="bg-teal-50 border border-teal-200 rounded-xl p-4 text-xs text-teal-900 space-y-1.5">
+        <div class="font-bold text-sm text-teal-950">Exam Day Quick Tip</div>
+        <p>Always state units (N, kgf, mm, degrees), draw a neat free-body diagram (FBD), and show the % error formula clearly on your sheet.</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="lg:col-span-8 xl:col-span-9 space-y-6"></main>
+  </div>
+
+  <script>
+    const EXPERIMENTS = [
+      {
+        id: 1,
+        shortTitle: "Polygon Law of Forces",
+        title: "To verify polygon law of forces with the help of universal force table.",
+        apparatus: [
+          "Universal force table (circular graduated disc with 0°–360° scale)",
+          "4 or 5 frictionless pulleys clamped around the rim",
+          "Central metal ring with strings",
+          "Slotted weights with hangers",
+          "Spirit level and drawing sheet (for graphical check)"
+        ],
+        theory: "The Polygon Law of Forces states that if a number of coplanar concurrent forces acting simultaneously on a particle are represented in magnitude and direction by the sides of a polygon taken in order, their resultant is represented in magnitude and direction by the closing side of the polygon taken in the opposite order. If the polygon closes on itself, the resultant is zero and the system is in equilibrium.",
+        formulas: [
+          "Horizontal sum: ΣFx = F1·cos(θ1) + F2·cos(θ2) + ... + Fn·cos(θn)",
+          "Vertical sum: ΣFy = F1·sin(θ1) + F2·sin(θ2) + ... + Fn·sin(θn)",
+          "Resultant: R = √((ΣFx)² + (ΣFy)²)",
+          "Direction: α = tan⁻¹(ΣFy / ΣFx)",
+          "Equilibrant (E): Equal in magnitude to R, opposite in direction (θ_E = α ± 180°)"
+        ],
+        procedure: [
+          "Level the universal force table horizontally using the spirit level and leveling screws.",
+          "Fix 3 or 4 pulleys at chosen angles (e.g., θ1, θ2, θ3, θ4) and hang known weights F1, F2, F3, F4.",
+          "Attach one more pulley and adjust both its angle and hanging weight until the central ring sits concentrically around the center pin without touching it.",
+          "This balancing force is the Equilibrant (E). The Resultant (R) is equal to E in magnitude and 180° opposite in direction.",
+          "Draw the force polygon to a suitable scale on paper and verify that the closing side matches R (or closes when E is included)."
+        ],
+        precautions: [
+          "Ensure the force table is perfectly horizontal.",
+          "Pulleys must rotate freely without friction; tap the table gently before reading.",
+          "Central ring must not touch the central pin when equilibrium is checked.",
+          "Include the weight of the hanger in every total force reading."
+        ],
+        viva: [
+          { q: "State the Polygon Law of Forces.", a: "If a number of coplanar concurrent forces acting on a particle are represented in magnitude and direction by the sides of a polygon taken in order, their resultant is represented by the closing side of the polygon taken in the opposite order." },
+          { q: "What is the difference between Resultant and Equilibrant?", a: "Resultant is a single force that produces the same effect as all given forces combined. Equilibrant is a single force equal in magnitude and opposite in direction (180° apart) to the resultant that brings the system into equilibrium." },
+          { q: "What are coplanar concurrent forces?", a: "Forces that lie in the same plane (coplanar) and whose lines of action intersect at a single common point (concurrent)." },
+          { q: "Why do we tap the force table gently before taking readings?", a: "To overcome static friction in the pulleys so the strings settle into their true equilibrium position." },
+          { q: "Can the polygon law be applied to non-concurrent forces?", a: "No, the polygon law of forces applies only to concurrent coplanar forces. For non-concurrent forces, moments must also be balanced." },
+          { q: "What happens if the central ring touches the central pin?", a: "The pin exerts an unknown reaction force on the ring, which means the hanging weights alone are not in true equilibrium." }
+        ]
+      },
+      {
+        id: 2,
+        shortTitle: "Beam of Parallel Forces",
+        title: "To verify the principle of forces in beam of parallel forces apparatus with the help of beam supported at its end.",
+        apparatus: [
+          "Parallel forces apparatus (graduated wooden/metal beam)",
+          "Two spring balances / compression supports at the two ends (A and B)",
+          "Set of slotted weights with hangers",
+          "Meter scale / graduated markings on the beam"
+        ],
+        theory: "For a rigid horizontal beam subjected to coplanar parallel vertical forces in static equilibrium, two conditions must hold: (1) The algebraic sum of all vertical forces is zero (ΣFy = 0), meaning the sum of support reactions equals the sum of downward loads. (2) The algebraic sum of moments of all forces about any point in the plane is zero (ΣM = 0), which is the Principle of Moments (Varignon's Theorem).",
+        formulas: [
+          "Force equilibrium: RA + RB = W1 + W2 + ... + Wn",
+          "Moment about A: RB × L = W1·x1 + W2·x2 + ... + Wn·xn",
+          "Reaction at A: RA = (Total Load) − RB",
+          "% Error = (|Observed R − Calculated R| / Calculated R) × 100"
+        ],
+        procedure: [
+          "Note the total span L between supports A and B and record the initial zero-load readings of both spring balances (or tare them to zero).",
+          "Hang known weights W1, W2, ... at measured distances x1, x2, ... from the left support A.",
+          "Ensure the beam remains horizontal and record the observed reactions RA(obs) and RB(obs) from the two end supports.",
+          "Calculate theoretical reactions RA(calc) and RB(calc) using ΣMA = 0 and ΣFy = 0.",
+          "Compare observed and calculated reactions and compute the percentage error."
+        ],
+        precautions: [
+          "Subtract the dead weight / initial zero reading of the beam from the spring balance readings if not tared.",
+          "Keep the beam horizontal while taking readings.",
+          "Measure all distances accurately from the exact center of the support.",
+          "Avoid parallax error when reading the spring balance pointers."
+        ],
+        viva: [
+          { q: "State the Principle of Moments.", a: "If a body is in equilibrium under the action of a number of coplanar forces, the algebraic sum of the moments of all forces about any point in their plane is zero (sum of clockwise moments = sum of anticlockwise moments)." },
+          { q: "What are the conditions of equilibrium for parallel coplanar forces?", a: "Two conditions: ΣFy = 0 (sum of upward forces = sum of downward forces) and ΣM = 0 (sum of moments about any point = 0)." },
+          { q: "What is a simply supported beam?", a: "A beam that rests freely on two end supports (such as a pin and a roller) capable of exerting vertical reactions." },
+          { q: "What is the difference between like and unlike parallel forces?", a: "Like parallel forces act in the same direction (e.g., all downward weights), while unlike parallel forces act in opposite directions (e.g., downward weights vs. upward support reactions)." },
+          { q: "Why is it important to take moments about one of the supports?", a: "Taking moments about support A eliminates the unknown reaction RA from the equation (since its moment arm is zero), allowing direct calculation of RB." },
+          { q: "State Varignon's Theorem.", a: "The moment of the resultant of several concurrent or parallel forces about any point is equal to the algebraic sum of the moments of the individual forces about the same point." }
+        ]
+      },
+      {
+        id: 3,
+        shortTitle: "Coefficient of Friction",
+        title: "To measure the co-efficient of friction of different surfaces.",
+        apparatus: [
+          "Inclined plane / horizontal friction apparatus with adjustable angle",
+          "Slider blocks of different materials (wood, brass, steel, glass/aluminum)",
+          "Frictionless pulley, string, and weight pan",
+          "Slotted weights and spirit level"
+        ],
+        theory: "Friction is the tangential resistive force that opposes the relative motion (or impending motion) between two surfaces in contact. Limiting friction (F_max) is directly proportional to the normal reaction (N) between the surfaces: F_max = μ·N. On an inclined plane, when a block is just on the verge of sliding down under its own weight, the angle of inclination equals the angle of repose (α), and μ = tan(α).",
+        formulas: [
+          "Horizontal plane: μ = F / N = (P_pan + P_weights) / W_block",
+          "Inclined plane (sliding down without effort): μ = tan(α)  [Angle of Repose]",
+          "Inclined plane (pulled up by effort P): μ = (P − W·sinθ) / (W·cosθ)",
+          "Angle of friction (φ): tan(φ) = μ"
+        ],
+        procedure: [
+          "Clean both the plane surface and the slider block to remove dust or oil.",
+          "Method A (Horizontal Plane): Place block of weight W on the horizontal plane, attach string over pulley to pan, and add weights until the block just begins to slide steadily. Record F = P and N = W.",
+          "Method B (Inclined Plane / Angle of Repose): Place block on the plane and slowly raise the inclination until the block just starts sliding down uniformly. Record angle α.",
+          "Repeat for different surface pairs (e.g., wood-on-wood, brass-on-wood, steel-on-glass) and take 3 trials per pair to find average μ."
+        ],
+        precautions: [
+          "Keep the string parallel to the plane surface.",
+          "Add weights in small increments so you catch the exact point of impending motion.",
+          "Ensure surfaces are dry and free from dust/grease.",
+          "Take at least 3 readings for each surface pair and average them."
+        ],
+        viva: [
+          { q: "Define Coefficient of Friction (μ).", a: "It is the ratio of the limiting friction force (F) to the normal reaction (N) between two surfaces in contact: μ = F / N. It is dimensionless." },
+          { q: "What is the Angle of Repose?", a: "The maximum angle of inclination of a rough plane with the horizontal at which a body placed on it is just on the verge of sliding down under its own weight. Numerically, tan(α) = μ." },
+          { q: "Distinguish between Static Friction and Kinetic (Dynamic) Friction.", a: "Static friction acts when the body is at rest and resists impending motion (up to limiting friction). Kinetic friction acts when the body is in motion and is slightly smaller than limiting static friction." },
+          { q: "Does the coefficient of friction depend on the area of contact?", a: "No, according to the laws of dry (Coulomb) friction, limiting friction is independent of the apparent area of contact and depends only on the nature/roughness of the surfaces and the normal reaction." },
+          { q: "What is the Angle of Friction (φ)?", a: "The angle made by the resultant of the normal reaction (N) and limiting friction (F) with the normal reaction. tan(φ) = F/N = μ." },
+          { q: "Which has higher μ: wood-on-wood or steel-on-glass?", a: "Wood-on-wood has a higher coefficient of friction because of greater surface roughness compared to smooth steel-on-glass." }
+        ]
+      },
+      {
+        id: 4,
+        shortTitle: "Simple Roof Truss",
+        title: "To calculate the forces in the members of simple roof truss and find the error between the observed and calculated values.",
+        apparatus: [
+          "Simple roof truss apparatus (pin-jointed members with built-in spring balances/dynamometers)",
+          "Rigid support frame",
+          "Hanger and slotted weights",
+          "Protractor / scale for measuring member angles"
+        ],
+        theory: "A truss is a pin-jointed framework of straight members designed to carry loads, where each member is subjected only to axial tension or compression. Assuming loads are applied only at joints and joints are frictionless pins, member forces can be calculated analytically using the Method of Joints (applying ΣFx = 0 and ΣFy = 0 at each joint).",
+        formulas: [
+          "At each joint: ΣFx = 0 and ΣFy = 0",
+          "For a symmetric triangular truss (angle θ with horizontal, apex load W):",
+          "  Support reactions: RA = RB = W / 2",
+          "  Inclined rafters (Compression): F_rafter = W / (2·sinθ)",
+          "  Bottom horizontal tie (Tension): F_tie = W / (2·tanθ)",
+          "% Error = (|Observed Force − Calculated Force| / Calculated Force) × 100"
+        ],
+        procedure: [
+          "Measure the span, height, and angles of the truss members, and record initial zero readings of the spring balances in each member.",
+          "Apply a known vertical load W at the apex (crown) joint of the truss.",
+          "Record the observed force (and note whether it is tension or compression) from the dial/spring balance in each member.",
+          "Apply the Method of Joints analytically to calculate the theoretical force in each member.",
+          "Compute the percentage error between observed and calculated values for each member."
+        ],
+        precautions: [
+          "Record zero-error readings of all member balances before applying the load.",
+          "Apply loads gently at the exact joint without jerking.",
+          "Verify whether a member's scale reads compression or tension.",
+          "Tap the frame lightly before reading to overcome pin friction."
+        ],
+        viva: [
+          { q: "What is a truss, and what is a perfect truss?", a: "A truss is a pin-jointed rigid structure made of straight members carrying only axial loads. A perfect truss satisfies m = 2j − 3 (in 2D), where m is the number of members and j is the number of joints." },
+          { q: "What are the assumptions in truss analysis?", a: "(1) Members are connected by smooth frictionless pins, (2) Loads are applied only at joints, (3) Self-weight of members is negligible compared to applied loads, and (4) Members are straight." },
+          { q: "In a simple triangular roof truss loaded at the apex, which members are in compression and which are in tension?", a: "The two inclined rafters are in compression, while the bottom horizontal tie member is in tension." },
+          { q: "What is the difference between Method of Joints and Method of Sections?", a: "Method of Joints isolates one joint at a time (best when all member forces are needed, max 2 unknowns per joint). Method of Sections cuts through the truss (best when only a few specific member forces are needed, max 3 unknowns)." },
+          { q: "What is a redundant truss vs. a deficient truss?", a: "If m > 2j − 3, it is redundant (over-stiff/indeterminate). If m < 2j − 3, it is deficient (unstable and can collapse)." },
+          { q: "Why do observed values differ slightly from calculated values?", a: "Due to friction at the pin joints, self-weight of the members/gauges, and minor spring balance calibration errors." }
+        ]
+      },
+      {
+        id: 5,
+        shortTitle: "Square Thread Screw Jack",
+        title: "To determine the mechanical advantage and efficiency of a square thread jack and plot a graph between W and P and W and efficiency.",
+        apparatus: [
+          "Square thread screw jack apparatus with circular effort wheel/pulley",
+          "Slotted weights for Load (W) and Effort (P)",
+          "String / cord",
+          "Vernier caliper / steel rule (to measure pitch p and wheel diameter D)"
+        ],
+        theory: "A screw jack is a simple lifting machine used to raise heavy loads (W) by applying a smaller effort (P) at the rim of a handle or effort wheel of radius R. Because of friction in the square threads, the Actual Mechanical Advantage (MA) is always less than the Velocity Ratio (VR), and Efficiency (η) increases with load up to a limiting value. Plotting W vs. P yields a straight line (Law of Machine: P = mW + C), and plotting W vs. η yields a curve rising toward a maximum asymptote.",
+        formulas: [
+          "Mechanical Advantage: MA = W / P",
+          "Velocity Ratio: VR = (2πR) / p  = (πD) / p   (where R = effort wheel radius, p = screw pitch)",
+          "Efficiency: η (%) = (MA / VR) × 100 = (W / (P × VR)) × 100",
+          "Law of Machine: P = m·W + C   (m = slope, C = friction effort at zero load)",
+          "Maximum Efficiency: η_max = 1 / (m × VR) × 100%"
+        ],
+        procedure: [
+          "Measure the diameter D (or radius R) of the effort wheel and the pitch p of the square thread screw (for single-start thread, pitch = distance moved in 1 full revolution).",
+          "Calculate the constant Velocity Ratio: VR = πD / p.",
+          "Place a known load W on the jack platform and add weights P to the effort hanger until the load just begins to rise steadily.",
+          "Repeat for 5–6 increasing values of load W and record the corresponding effort P.",
+          "Compute MA and η for each reading, then plot two graphs: (1) Load W vs. Effort P (straight line), and (2) Load W vs. Efficiency η (rising curve)."
+        ],
+        precautions: [
+          "Ensure the screw threads are clean and uniformly lubricated.",
+          "Measure the pitch accurately across multiple threads and divide by the number of threads.",
+          "The effort cord must be wrapped cleanly without overlapping on the wheel.",
+          "Take the effort P when the load just starts moving upward at a steady speed."
+        ],
+        viva: [
+          { q: "Define Mechanical Advantage (MA), Velocity Ratio (VR), and Efficiency (η).", a: "MA = Load (W) / Effort (P). VR = Distance moved by effort / Distance moved by load = 2πR / p. Efficiency η = MA / VR (or Work output / Work input)." },
+          { q: "Why is a square thread preferred over a V-thread in a screw jack?", a: "Square threads have higher efficiency and less friction because the normal reaction acts parallel to the screw axis without a radial wedging component, and they handle heavy axial loads well." },
+          { q: "What is a self-locking machine?", a: "A machine in which the load does not fall back when the effort is removed. This happens when efficiency is less than 50% (η < 50%)." },
+          { q: "What shape do the graphs of (W vs. P) and (W vs. η) have?", a: "W vs. P is a straight line with a positive y-intercept (P = mW + C, Law of Machine). W vs. η is a rising curve that flattens out toward a maximum efficiency η_max." },
+          { q: "Why does efficiency increase with load at first?", a: "At small loads, the constant friction loss C is a large fraction of total effort P. As W increases, the relative effect of C shrinks, so η rises toward 1/(m·VR)." },
+          { q: "Does Velocity Ratio change when the load changes?", a: "No, VR depends purely on the geometry of the machine (effort wheel radius R and screw pitch p), so it remains constant." }
+        ]
+      },
+      {
+        id: 6,
+        shortTitle: "Jib Crane",
+        title: "To calculate the stress (force) in various members of the JIB crane and find %age error between calculated and observed.",
+        apparatus: [
+          "Jib crane apparatus (vertical post, inclined jib with compression balance, tie rod with tension spring balance)",
+          "Slotted weights with hanger",
+          "Meter scale and plumb bob / protractor"
+        ],
+        theory: "A jib crane consists of a vertical post, an inclined jib (in compression), and a tie rod (in tension) meeting at the crane head where the load W is suspended. The three forces at the crane head—vertical load W, tension T in the tie rod, and compression C in the jib—are coplanar and concurrent. By resolving forces horizontally and vertically (or using Lami's Theorem / triangle of forces), theoretical forces T and C are found and compared with observed spring balance readings.",
+        formulas: [
+          "Lami's Theorem at crane head: W / sin(α) = T / sin(β) = C / sin(γ)",
+          "Or by Equilibrium (ΣFx = 0, ΣFy = 0):",
+          "  Horizontal: C·cos(θ_jib) − T·cos(θ_tie) = 0",
+          "  Vertical: C·sin(θ_jib) ± T·sin(θ_tie) − W = 0",
+          "% Error = (|Observed − Calculated| / Calculated) × 100"
+        ],
+        procedure: [
+          "Note the initial zero-load readings of the tie spring balance (tension) and jib compression balance.",
+          "Measure the lengths of the vertical post, jib, and tie rod (or the angles made with the vertical/horizontal).",
+          "Suspend a known load W from the crane head.",
+          "Tap the apparatus gently and record the observed tension T_obs and compression C_obs (subtracting zero errors).",
+          "Calculate T_calc and C_calc using Lami's Theorem or triangle of forces, and find the % error for both members."
+        ],
+        precautions: [
+          "Always record and subtract zero-load readings (due to self-weight of jib and tie).",
+          "Measure lengths/angles after the load is applied if the spring deflects noticeably.",
+          "Apply the load gently without swinging.",
+          "Tap lightly to relieve joint friction before reading the dials."
+        ],
+        viva: [
+          { q: "Which member of a jib crane is in tension and which is in compression?", a: "The tie rod (top member) is in tension, and the inclined jib (bottom strut) is in compression." },
+          { q: "State Lami's Theorem.", a: "If three coplanar, concurrent forces acting at a point are in equilibrium, each force is proportional to the sine of the angle between the other two forces: F1/sinα = F2/sinβ = F3/sinγ." },
+          { q: "What is the difference between force and stress?", a: "Force is the external push/pull or internal axial load (in N or kgf), whereas stress is internal force per unit cross-sectional area (σ = F/A, in N/m² or MPa). In this lab, spring balances directly measure member forces." },
+          { q: "Why do we measure lengths/angles after hanging the load?", a: "Because the spring balances inside the tie and jib stretch/compress slightly under load, changing the triangle geometry slightly." },
+          { q: "Can Lami's Theorem be used if four forces act at the crane head?", a: "No, Lami's Theorem strictly applies only to three coplanar concurrent forces in equilibrium." },
+          { q: "What happens to the tie tension if the tie rod is made more horizontal?", a: "Its vertical component decreases, or for a given geometry, changing the angle alters the force triangle and increases or decreases T depending on the jib angle." }
+        ]
+      }
+    ];
+
+    let state = {
+      activeExpId: 1,
+      view: "exp", // "exp" | "viva" | "calc"
+      search: "",
+      revised: {},
+      revealedViva: {}
+    };
+
+    try {
+      const saved = JSON.parse(localStorage.getItem("em_practical_state") || "{}");
+      if (saved.revised) state.revised = saved.revised;
+    } catch (e) {}
+
+    function saveState() {
+      try {
+        localStorage.setItem("em_practical_state", JSON.stringify({ revised: state.revised }));
+      } catch (e) {}
+    }
+
+    function updateProgressUI() {
+      const count = Object.values(state.revised).filter(Boolean).length;
+      document.getElementById("progress-count").textContent = `${count} / ${EXPERIMENTS.length}`;
+    }
+
+    function renderNav() {
+      const nav = document.getElementById("exp-nav");
+      const q = state.search.trim().toLowerCase();
+      const filtered = EXPERIMENTS.filter(e =>
+        e.shortTitle.toLowerCase().includes(q) ||
+        e.title.toLowerCase().includes(q)
+      );
+
+      nav.innerHTML = filtered.map(exp => {
+        const isActive = state.view === "exp" && state.activeExpId === exp.id;
+        const isDone = !!state.revised[exp.id];
+        return `
+          <button
+            type="button"
+            data-exp-id="${exp.id}"
+            class="exp-nav-btn w-full text-left px-3 py-2.5 rounded-lg text-sm transition flex items-center justify-between gap-2 ${
+              isActive
+                ? "bg-teal-700 text-white font-semibold shadow-sm"
+                : "hover:bg-slate-100 text-slate-700"
+            }"
+          >
+            <span class="truncate"><span class="opacity-70 mr-1.5">0${exp.id}</span>${exp.shortTitle}</span>
+            ${isDone ? `<span class="text-xs px-1.5 py-0.5 rounded ${isActive ? "bg-amber-400 text-slate-950" : "bg-emerald-100 text-emerald-800"} font-bold">✓</span>` : ""}
+          </button>
+        `;
+      }).join("") || `<p class="text-xs text-slate-400 py-2">No matching experiments.</p>`;
+
+      nav.querySelectorAll(".exp-nav-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.activeExpId = Number(btn.dataset.expId);
+          state.view = "exp";
+          render();
+        });
+      });
+    }
+
+    function renderExperimentView() {
+      const exp = EXPERIMENTS.find(e => e.id === state.activeExpId) || EXPERIMENTS[0];
+      const isDone = !!state.revised[exp.id];
+      const main = document.getElementById("main-content");
+
+      main.innerHTML = `
+        <section class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <span class="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-100 text-teal-900 mb-2">
+                Experiment 0${exp.id} • Exam: 23/11/2026
+              </span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">${exp.shortTitle}</h2>
+              <p class="text-sm text-slate-600 mt-1"><span class="font-semibold text-slate-800">Aim:</span> ${exp.title}</p>
+            </div>
+            <button id="toggle-revised" type="button" class="shrink-0 px-4 py-2 rounded-lg text-sm font-semibold transition border ${
+              isDone
+                ? "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700"
+                : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+            }">
+              ${isDone ? "✓ Marked Revised" : "Mark as Revised"}
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-teal-900 mb-2.5">Apparatus Required</h3>
+              <ul class="list-disc list-inside space-y-1.5 text-sm text-slate-700">
+                ${exp.apparatus.map(a => `<li>${a}</li>`).join("")}
+              </ul>
+            </div>
+            <div class="bg-amber-50/70 rounded-xl p-4 border border-amber-200">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-amber-900 mb-2.5">Key Formulas</h3>
+              <ul class="space-y-1.5 text-xs sm:text-sm text-slate-800 formula-box">
+                ${exp.formulas.map(f => `<li class="bg-white/80 px-2.5 py-1.5 rounded border border-amber-200/80">${f}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Theory &amp; Principle</h3>
+            <p class="text-sm sm:text-base text-slate-700 leading-relaxed bg-teal-50/50 border-l-4 border-teal-700 p-4 rounded-r-xl">${exp.theory}</p>
+          </div>
+
+          ${exp.id === 5 ? `
+            <div class="bg-white border border-slate-200 rounded-xl p-4">
+              <h3 class="text-sm font-bold text-slate-900 mb-1">Expected Screw Jack Curves (W vs P &amp; W vs η)</h3>
+              <p class="text-xs text-slate-500 mb-3">Illustrative trend showing linear Law of Machine (P = mW + C) and rising efficiency curve.</p>
+              <div class="relative h-64"><canvas id="screwJackChart"></canvas></div>
+            </div>
+          ` : ""}
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-2.5">Step-by-Step Procedure</h3>
+              <ol class="list-decimal list-inside space-y-2 text-sm text-slate-700">
+                ${exp.procedure.map(p => `<li class="leading-relaxed">${p}</li>`).join("")}
+              </ol>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-2.5">Precautions</h3>
+              <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                ${exp.precautions.map(p => `<li class="leading-relaxed">${p}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Viva Voce Section -->
+          <div class="border-t border-slate-200 pt-5">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-lg font-extrabold text-slate-900">Viva Voce Questions (${exp.viva.length})</h3>
+              <div class="flex gap-2">
+                <button id="reveal-all-viva" type="button" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700">Reveal All</button>
+                <button id="hide-all-viva" type="button" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700">Hide All</button>
+              </div>
+            </div>
+            <div class="space-y-2.5">
+              ${exp.viva.map((v, idx) => {
+                const key = `${exp.id}-${idx}`;
+                const open = !!state.revealedViva[key];
+                return `
+                  <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button type="button" data-viva-key="${key}" class="viva-toggle w-full text-left px-4 py-3 flex items-center justify-between gap-3 hover:bg-slate-100 transition">
+                      <span class="text-sm font-semibold text-slate-900">Q${idx + 1}. ${v.q}</span>
+                      <span class="text-xs font-bold text-teal-700 shrink-0">${open ? "Hide" : "Show"}</span>
+                    </button>
+                    ${open ? `<div class="px-4 pb-3.5 pt-1 text-sm text-slate-700 bg-white border-t border-slate-200">${v.a}</div>` : ""}
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        </section>
+      `;
+
+      document.getElementById("toggle-revised").addEventListener("click", () => {
+        state.revised[exp.id] = !state.revised[exp.id];
+        saveState();
+        render();
+      });
+
+      document.getElementById("reveal-all-viva").addEventListener("click", () => {
+        exp.viva.forEach((_, idx) => { state.revealedViva[`${exp.id}-${idx}`] = true; });
+        renderExperimentView();
+      });
+
+      document.getElementById("hide-all-viva").addEventListener("click", () => {
+        exp.viva.forEach((_, idx) => { state.revealedViva[`${exp.id}-${idx}`] = false; });
+        renderExperimentView();
+      });
+
+      main.querySelectorAll(".viva-toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const k = btn.dataset.vivaKey;
+          state.revealedViva[k] = !state.revealedViva[k];
+          renderExperimentView();
+        });
+      });
+
+      if (exp.id === 5 && typeof Chart !== "undefined") {
+        const ctx = document.getElementById("screwJackChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["20 N", "40 N", "60 N", "80 N", "100 N", "120 N"],
+            datasets: [
+              {
+                label: "Effort P (N) — Linear (P = mW + C)",
+                data: [4.2, 6.4, 8.6, 10.8, 13.0, 15.2],
+                borderColor: "#0f766e",
+                backgroundColor: "rgba(15, 118, 110, 0.15)",
+                yAxisID: "y",
+                tension: 0.1
+              },
+              {
+                label: "Efficiency η (%) — Rising Curve",
+                data: [19.0, 25.0, 27.9, 29.6, 30.8, 31.6],
+                borderColor: "#d97706",
+                backgroundColor: "rgba(217, 119, 6, 0.15)",
+                yAxisID: "y1",
+                tension: 0.35
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { type: "linear", position: "left", title: { display: true, text: "Effort P (N)" } },
+              y1: { type: "linear", position: "right", min: 0, max: 50, grid: { drawOnChartArea: false }, title: { display: true, text: "Efficiency η (%)" } }
+            }
+          }
+        });
+      }
+    }
+
+    function renderAllVivaView() {
+      const main = document.getElementById("main-content");
+      main.innerHTML = `
+        <section class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-900">Complete Viva Voce Bank (36 Questions)</h2>
+              <p class="text-sm text-slate-600">Tap any question to test yourself before revealing the answer.</p>
+            </div>
+            <button id="back-to-exp" type="button" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800">Back to Experiments</button>
+          </div>
+          ${EXPERIMENTS.map(exp => `
+            <div class="space-y-2">
+              <h3 class="text-sm font-bold uppercase tracking-wider text-teal-800 pt-2">0${exp.id}. ${exp.shortTitle}</h3>
+              ${exp.viva.map((v, idx) => {
+                const key = `${exp.id}-${idx}`;
+                const open = !!state.revealedViva[key];
+                return `
+                  <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button type="button" data-viva-key="${key}" class="viva-toggle w-full text-left px-4 py-3 flex items-center justify-between gap-3 hover:bg-slate-100 transition">
+                      <span class="text-sm font-semibold text-slate-900">${v.q}</span>
+                      <span class="text-xs font-bold text-teal-700 shrink-0">${open ? "Hide" : "Show"}</span>
+                    </button>
+                    ${open ? `<div class="px-4 pb-3.5 pt-1 text-sm text-slate-700 bg-white border-t border-slate-200">${v.a}</div>` : ""}
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          `).join("")}
+        </section>
+      `;
+
+      document.getElementById("back-to-exp").addEventListener("click", () => {
+        state.view = "exp";
+        render();
+      });
+
+      main.querySelectorAll(".viva-toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const k = btn.dataset.vivaKey;
+          state.revealedViva[k] = !state.revealedViva[k];
+          renderAllVivaView();
+        });
+      });
+    }
+
+    function renderCalcView() {
+      const main = document.getElementById("main-content");
+      main.innerHTML = `
+        <section class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-900">Engineering Mechanics Lab Calculators</h2>
+              <p class="text-sm text-slate-600">Verify your lab readings, % errors, and screw jack efficiency quickly.</p>
+            </div>
+            <button id="back-to-exp-2" type="button" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800">Back to Experiments</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- % Error Calculator -->
+            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-3">
+              <h3 class="text-base font-bold text-slate-900">% Error Calculator (Beam, Truss, Jib Crane)</h3>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="calc-obs">Observed Value</label>
+                  <input id="calc-obs" type="number" step="any" value="48.5" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="calc-theo">Calculated Value</label>
+                  <input id="calc-theo" type="number" step="any" value="50" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+              </div>
+              <div id="err-result" class="bg-white border border-teal-200 rounded-lg p-3 text-sm font-bold text-teal-900">% Error: 3.00%</div>
+            </div>
+
+            <!-- Screw Jack Calculator -->
+            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-3">
+              <h3 class="text-base font-bold text-slate-900">Screw Jack MA, VR &amp; Efficiency</h3>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="sj-w">Load W (N)</label>
+                  <input id="sj-w" type="number" step="any" value="100" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="sj-p">Effort P (N)</label>
+                  <input id="sj-p" type="number" step="any" value="10" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="sj-d">Wheel Dia D (mm)</label>
+                  <input id="sj-d" type="number" step="any" value="100" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1" for="sj-pitch">Pitch p (mm)</label>
+                  <input id="sj-pitch" type="number" step="any" value="10" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-sm" />
+                </div>
+              </div>
+              <div id="sj-result" class="bg-white border border-amber-200 rounded-lg p-3 text-xs sm:text-sm font-semibold text-slate-800"></div>
+            </div>
+          </div>
+        </section>
+      `;
+
+      document.getElementById("back-to-exp-2").addEventListener("click", () => {
+        state.view = "exp";
+        render();
+      });
+
+      function updateErr() {
+        const obs = parseFloat(document.getElementById("calc-obs").value);
+        const theo = parseFloat(document.getElementById("calc-theo").value);
+        const el = document.getElementById("err-result");
+        if (isNaN(obs) || isNaN(theo) || theo === 0) {
+          el.textContent = "Enter a valid non-zero calculated value.";
+          return;
+        }
+        const pct = (Math.abs(obs - theo) / Math.abs(theo)) * 100;
+        el.textContent = `% Error: ${pct.toFixed(2)}%`;
+      }
+
+      function updateSJ() {
+        const W = parseFloat(document.getElementById("sj-w").value);
+        const P = parseFloat(document.getElementById("sj-p").value);
+        const D = parseFloat(document.getElementById("sj-d").value);
+        const p = parseFloat(document.getElementById("sj-pitch").value);
+        const el = document.getElementById("sj-result");
+        if ([W, P, D, p].some(isNaN) || P <= 0 || p <= 0) {
+          el.textContent = "Enter valid positive numbers for P and p.";
+          return;
+        }
+        const MA = W / P;
+        const VR = (Math.PI * D) / p;
+        const eff = (MA / VR) * 100;
+        el.innerHTML = `MA = <span class="text-teal-800">${MA.toFixed(2)}</span> &nbsp;|&nbsp; VR = <span class="text-teal-800">${VR.toFixed(2)}</span> &nbsp;|&nbsp; Efficiency η = <span class="text-amber-700">${eff.toFixed(2)}%</span>`;
+      }
+
+      ["calc-obs", "calc-theo"].forEach(id => document.getElementById(id).addEventListener("input", updateErr));
+      ["sj-w", "sj-p", "sj-d", "sj-pitch"].forEach(id => document.getElementById(id).addEventListener("input", updateSJ));
+      updateErr();
+      updateSJ();
+    }
+
+    function render() {
+      updateProgressUI();
+      renderNav();
+      if (state.view === "viva") renderAllVivaView();
+      else if (state.view === "calc") renderCalcView();
+      else renderExperimentView();
+    }
+
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      state.search = e.target.value;
+      renderNav();
+    });
+
+    document.getElementById("btn-viva-mode").addEventListener("click", () => {
+      state.view = state.view === "viva" ? "exp" : "viva";
+      render();
+    });
+
+    document.getElementById("btn-calc-mode").addEventListener("click", () => {
+      state.view = state.view === "calc" ? "exp" : "calc";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
